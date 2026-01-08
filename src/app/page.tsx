@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, BookOpen, Sparkles, Heart, Sun, Moon, Star, Zap } from "lucide-react";
 
 const ebookContent = [
@@ -146,6 +146,11 @@ Você é um ser de luz infinita. Sua capacidade de mentalizar e manifestar é il
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(0);
   const [isReading, setIsReading] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const nextPage = () => {
     if (currentPage < ebookContent.length - 1) {
@@ -158,6 +163,10 @@ export default function Home() {
       setCurrentPage(currentPage - 1);
     }
   };
+
+  if (!mounted) {
+    return null;
+  }
 
   const currentContent = ebookContent[currentPage];
   const IconComponent = currentContent.icon;
